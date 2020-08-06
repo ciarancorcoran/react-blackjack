@@ -4,6 +4,7 @@ import { GameStatus } from '../constants/enums/GameStatus'
 import { Card } from '../constants/types/Card'
 import { Score } from '../constants/types/Score'
 
+import CardComponent from '../components/Card/CardComponent'
 import GameControls from '../components/GameControls/GameControls'
 
 const Game: FunctionComponent = () => {
@@ -133,11 +134,15 @@ const Game: FunctionComponent = () => {
   }
 
   return (
+    <>
+    <CardComponent cards={playerCards} cardType={'Player Cards'} />
+    <CardComponent cards={dealerCards} cardType={'Dealer Cards'} />
     <GameControls
       handleStartGame={handleStartGame}
       handleHitClick={handleHitClick}
       handleStickClick={handleStickClick}
     />
+    </>
   )
 }
 
