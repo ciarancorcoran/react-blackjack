@@ -33,9 +33,9 @@ const Game: FunctionComponent<GameProps> = ({ startingDeck }) => {
   const handleStartGame = () => {
     const startingPlayerCards: Card[] = [deck[0], deck[1]]
     const startingDealerCards: Card[] = [deck[2]]
-    const updatedDeck = deck.filter((r, i) => i > 2)
     const startingPlayerScore = cardsContainAce(startingPlayerCards) && isBlackJack(startingPlayerCards) ? 21 : startingPlayerCards[0].value + startingPlayerCards[1].value
     const startingDealerScore = startingDealerCards[0].value
+    const updatedDeck = deck.filter((r, i) => i > 2)
 
     setGameState(GameStatus.playerTurn)
     setPlayerCards([...startingPlayerCards])

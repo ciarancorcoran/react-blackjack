@@ -114,6 +114,13 @@ it('checks if a set of cards is blackjack and returns true if so', () => {
   ]
   const doWeHaveBlackJack = isBlackJack(cards)
   expect(doWeHaveBlackJack).toBe(true)
+
+  const moreCards: Card[] = [
+    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1},
+    {id: 'jack of hearts', name: 'jack of hearts', suit: 'hearts', value: 10}
+  ]
+  const doWeHaveBlackJackAgain = isBlackJack(moreCards)
+  expect(doWeHaveBlackJackAgain).toBe(true)
 })
 
 it('checks if a set of cards is blackjack and returns false if not', () => {
