@@ -1,6 +1,11 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
-import Game from '../Game'
+import Game, {
+  calculateScore,
+  cardsContainAce,
+  isHighAce,
+  isBlackJack
+} from '../Game'
 import { createAndShuffleDeck } from '../GameBoard'
 import { Card } from '../../constants/types/Card'
 
@@ -64,4 +69,58 @@ describe('Game', () => {
     fireEvent.click(stickButton)
     fireEvent.click(stickButton)
   })
+})
+
+// unit tests
+it('calculates a score from a given card and score', () => {
+  const card = {id: '5 of hearts', name: '5 of hearts', suit: 'hearts', value: 5}
+  const calculatedScore = calculateScore(card, 6)
+  expect(calculatedScore).toBe(11)
+})
+
+it('checks if given set of cards contains an ace', () => {
+  const cards: Card[] = [
+    {id: '5 of hearts', name: '5 of hearts', suit: 'hearts', value: 5},
+    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1}
+  ]
+  const doesItContainAce = cardsContainAce(cards)
+  expect(doesItContainAce).toBe(true)
+})
+
+it('checks if ace should be high and returns true if so', () => {
+  const cards: Card[] = [
+    {id: '5 of hearts', name: '5 of hearts', suit: 'hearts', value: 5},
+    {id: '5 of diamonds', name: '5 of diamonds', suit: 'diamonds', value: 5},
+    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1}
+  ]
+  const willItBeAHighAce = isHighAce(cards, 11)
+  expect(willItBeAHighAce).toBe(true)
+})
+
+it('checks if ace should be high and returns false if not', () => {
+  const cards: Card[] = [
+    {id: '5 of hearts', name: '5 of hearts', suit: 'hearts', value: 5},
+    {id: '5 of diamonds', name: '5 of diamonds', suit: 'diamonds', value: 5},
+    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1}
+  ]
+  const willItBeAHighAce = isHighAce(cards, 15)
+  expect(willItBeAHighAce).toBe(false)
+})
+
+it('checks if a set of cards is blackjack and returns true if so', () => {
+  const cards: Card[] = [
+    {id: 'jack of hearts', name: 'jack of hearts', suit: 'hearts', value: 10},
+    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1}
+  ]
+  const doWeHaveBlackJack = isBlackJack(cards)
+  expect(doWeHaveBlackJack).toBe(true)
+})
+
+it('checks if a set of cards is blackjack and returns false if not', () => {
+  const cards: Card[] = [
+    {id: '9 of hearts', name: '9 of hearts', suit: 'hearts', value: 9},
+    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1}
+  ]
+  const doWeHaveBlackJack = isBlackJack(cards)
+  expect(doWeHaveBlackJack).toBe(false)
 })
