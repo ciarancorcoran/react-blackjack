@@ -3,4 +3,5 @@ export type Card = {
   name: string
   suit: string
   value: number
+  isFaceCard?: boolean
 }
