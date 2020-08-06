@@ -5,9 +5,14 @@ import { Card } from '../constants/types/Card'
 import { Score } from '../constants/types/Score'
 
 import CardComponent from '../components/Card/CardComponent'
+import ScoreComponent from '../components/Score/ScoreComponent'
 import GameControls from '../components/GameControls/GameControls'
 
-const Game: FunctionComponent = () => {
+type GameProps = {
+  startingDeck: Card[]
+}
+
+const Game: FunctionComponent<GameProps> = ({ startingDeck }) => {
   const [gameState, setGameState] = useState<GameStatus>(GameStatus.stopped)
   const [deck, setDeck] = useState<Card[]>([])
   const [playerCards, setPlayerCards] = useState<Card[]>([])
@@ -15,49 +20,9 @@ const Game: FunctionComponent = () => {
   const [score, setScore] = useState<Score>({playerScore: 0, dealerScore: 0})
 
   useEffect(() => {
-    if (gameState === GameStatus.stopped) {
-      createAndShuffleDeck()
-      setGameState(GameStatus.started)
-    }
-  })
-
-  const createAndShuffleDeck = () => {
-    // TODO: to be improved
-    const suits = ['hearts',  'diamonds', 'spades', 'clubs']
-    let cards: Card[] = []
-    for (let i = 2; i < 11; i++) {
-      cards.push({id: `${i.toString()} of hearts`, name: `${i.toString()} of hearts`, suit: 'hearts', value: i})
-      cards.push({id: `${i.toString()} of diamonds`, name: `${i.toString()} of diamonds`, suit: 'diamonds', value: i})
-      cards.push({id: `${i.toString()} of spades`, name: `${i.toString()} of spades`, suit: 'spades', value: i})
-      cards.push({id: `${i.toString()} of clubs`, name: `${i.toString()} of clubs`, suit: 'clubs', value: i})
-    }
-
-    for (let i = 0; i < suits.length; i++) {
-      cards.push({id: `jack of ${suits[i]}`, name: 'jack', suit: suits[i], value: 10, isFaceCard: true})
-      cards.push({id: `queen of ${suits[i]}`, name: 'queen', suit: suits[i], value: 10, isFaceCard: true})
-      cards.push({id: `king of ${suits[i]}`, name: 'king', suit: suits[i], value: 10, isFaceCard: true})
-      cards.push({id: `ace of ${suits[i]}`, name: 'ace', suit: suits[i], value: 1})
-    }
-
-    setDeck(shuffleDeck([...cards]))
-  }
-
-  const shuffleDeck = (deck: Card[]) => {
-    const currentDeck = [...deck]
-    let currentIndex = currentDeck.length, temporaryValue, randomIndex;
-
-    while (0 !== currentIndex) {
-
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      temporaryValue = currentDeck[currentIndex]
-      currentDeck[currentIndex] = currentDeck[randomIndex]
-      currentDeck[randomIndex] = temporaryValue
-    }
-
-    return currentDeck
-  }
+    setDeck(startingDeck)
+    setGameState(GameStatus.started)
+  }, [startingDeck])
 
   const calculateScore = (card: Card, score: number) => {
     if (card.value === 1 && (score + 11 <= 21)) {
@@ -66,28 +31,23 @@ const Game: FunctionComponent = () => {
     return score + card.value
   }
 
-  const handleStartGame = () => {
-    if (gameState !== GameStatus.started) { return }
+  const isBlackJack = (holderDeck: Card[]) => {
+    const isFirstComboBlackJack = (holderDeck[0].isFaceCard || holderDeck[0].value === 10) && holderDeck[1].value === 1 ? true : false
+    const isSecondComboBlackJack = (holderDeck[1].isFaceCard || holderDeck[1].value === 10) && holderDeck[0].value === 1 ? true : false
+    return isFirstComboBlackJack || isSecondComboBlackJack ? true : false
+  }
 
+  const handleStartGame = () => {
     const startingPlayerCards: Card[] = [deck[0], deck[1]]
     const startingDealerCards: Card[] = [deck[2]]
     const updatedDeck = deck.filter((r, i) => i > 2)
-
-    // TODO: to be improved
-    const startingPlayerScore = () => {
-      if ((startingPlayerCards[0].isFaceCard || startingPlayerCards[0].value === 10) && startingPlayerCards[1].value === 1 ||
-          (startingPlayerCards[1].isFaceCard || startingPlayerCards[1].value === 10) && startingPlayerCards[0].value === 1) {
-        return 21
-      }
-      return startingPlayerCards[0].value + startingPlayerCards[1].value
-    }
-
+    const startingPlayerScore = isBlackJack(startingPlayerCards) ? 21 : startingPlayerCards[0].value + startingPlayerCards[1].value
     const startingDealerScore = startingDealerCards[0].value
 
     setGameState(GameStatus.playerTurn)
     setPlayerCards([...startingPlayerCards])
     setDealerCards([...startingDealerCards])
-    setScore({playerScore: startingPlayerScore(), dealerScore: startingDealerScore})
+    setScore({playerScore: startingPlayerScore, dealerScore: startingDealerScore})
     setDeck([...updatedDeck])
   }
 
@@ -114,11 +74,11 @@ const Game: FunctionComponent = () => {
   }
 
   const dealDealerCards = (dealerCards: Card[], currentDeck: Card[], dealerScore: number) => {
-    const updatedDealerScore = calculateScore(currentDeck[0], dealerScore)
     const updatedDealerCards = [...dealerCards, currentDeck[0]]
+    const updatedDealerScore = isBlackJack(updatedDealerCards) ? 21 : calculateScore(currentDeck[0], dealerScore)
     const updatedDeck = currentDeck.filter((r, i) => i >= 1)
 
-    if (updatedDealerScore >= 21) {
+    if (updatedDealerScore >= 21 || updatedDealerScore >= score.playerScore) {
       setGameState(GameStatus.stopped)
       updateDealerCards(updatedDealerCards, updatedDeck, updatedDealerScore)
       return
@@ -135,13 +95,14 @@ const Game: FunctionComponent = () => {
 
   return (
     <>
-    <CardComponent cards={playerCards} cardType={'Player Cards'} />
-    <CardComponent cards={dealerCards} cardType={'Dealer Cards'} />
-    <GameControls
-      handleStartGame={handleStartGame}
-      handleHitClick={handleHitClick}
-      handleStickClick={handleStickClick}
-    />
+      <CardComponent cards={playerCards} cardType={'Player Cards'} />
+      <CardComponent cards={dealerCards} cardType={'Dealer Cards'} />
+      <ScoreComponent score={score} />
+      <GameControls
+        handleStartGame={handleStartGame}
+        handleHitClick={handleHitClick}
+        handleStickClick={handleStickClick}
+      />
     </>
   )
 }
