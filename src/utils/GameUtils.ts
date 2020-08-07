@@ -30,20 +30,17 @@ export const checkWinner = (finalScore: Score) => {
 
 export const createDeck = () => {
   const suits = ['♥', '♦', '♠', '♣']
+  const values = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King']
   const cards: Card[] = []
 
-  for (let i = 2; i < 11; i++) {
-    cards.push({id: `${i.toString()} of ♥`, name: i.toString(), suit: '♥', value: i})
-    cards.push({id: `${i.toString()} of ♦`, name: i.toString(), suit: '♦', value: i})
-    cards.push({id: `${i.toString()} of ♠`, name: i.toString(), suit: '♠', value: i})
-    cards.push({id: `${i.toString()} of ♣`, name: i.toString(), suit: '♣', value: i})
-  }
-
   for (let i = 0; i < suits.length; i++) {
-    cards.push({id: `jack of ${suits[i]}`, name: 'jack', suit: suits[i], value: 10, isFaceCard: true})
-    cards.push({id: `queen of ${suits[i]}`, name: 'queen', suit: suits[i], value: 10, isFaceCard: true})
-    cards.push({id: `king of ${suits[i]}`, name: 'king', suit: suits[i], value: 10, isFaceCard: true})
-    cards.push({id: `ace of ${suits[i]}`, name: 'ace', suit: suits[i], value: 1})
+    for (let j = 0; j < values.length; j++) {
+      cards.push({
+        id: `${values[j]} of ${suits[i]}`,
+        name: values[j],
+        suit: suits[i],
+        value: j >= 10 ? 10 : j + 1})
+    }
   }
 
   return cards
