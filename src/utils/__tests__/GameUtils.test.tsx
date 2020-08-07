@@ -12,15 +12,15 @@ import {
 } from '../GameUtils'
 
 it('calculates a score from a given card and score', () => {
-  const card = {id: '5 of hearts', name: '5 of hearts', suit: 'hearts', value: 5}
+  const card = {id: '5 of ♥', name: '5', suit: '♥', value: 5}
   const calculatedScore = calculateScore(card, 6)
   expect(calculatedScore).toBe(11)
 })
 
 it('checks if given set of cards contains an ace', () => {
   const cards: Card[] = [
-    {id: '5 of hearts', name: '5 of hearts', suit: 'hearts', value: 5},
-    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1}
+    {id: '5 of ♥', name: '5', suit: '♥', value: 5},
+    {id: 'ace of ♥', name: 'ace', suit: '♥', value: 1}
   ]
   const doesItContainAce = cardsContainAce(cards)
   expect(doesItContainAce).toBe(true)
@@ -28,9 +28,9 @@ it('checks if given set of cards contains an ace', () => {
 
 it('checks if ace should be high and returns true if so', () => {
   const cards: Card[] = [
-    {id: '5 of hearts', name: '5 of hearts', suit: 'hearts', value: 5},
-    {id: '5 of diamonds', name: '5 of diamonds', suit: 'diamonds', value: 5},
-    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1}
+    {id: '5 of ♥', name: '5', suit: '♥', value: 5},
+    {id: '5 of ♦', name: '5', suit: '♦', value: 5},
+    {id: 'ace of ♥', name: 'ace', suit: '♥', value: 1}
   ]
   const willItBeAHighAce = isHighAce(cards, 11)
   expect(willItBeAHighAce).toBe(true)
@@ -38,9 +38,9 @@ it('checks if ace should be high and returns true if so', () => {
 
 it('checks if ace should be high and returns false if not', () => {
   const cards: Card[] = [
-    {id: '5 of hearts', name: '5 of hearts', suit: 'hearts', value: 5},
-    {id: '5 of diamonds', name: '5 of diamonds', suit: 'diamonds', value: 5},
-    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1}
+    {id: '5 of ♥', name: '5', suit: '♥', value: 5},
+    {id: '5 of ♦', name: '5', suit: '♦', value: 5},
+    {id: 'ace of ♥', name: 'ace', suit: '♥', value: 1}
   ]
   const willItBeAHighAce = isHighAce(cards, 15)
   expect(willItBeAHighAce).toBe(false)
@@ -48,15 +48,15 @@ it('checks if ace should be high and returns false if not', () => {
 
 it('checks if a set of cards is blackjack and returns true if so', () => {
   const cards: Card[] = [
-    {id: 'jack of hearts', name: 'jack of hearts', suit: 'hearts', value: 10},
-    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1}
+    {id: 'jack of ♥', name: 'jack', suit: '♥', value: 10},
+    {id: 'ace of ♥', name: 'ace', suit: '♥', value: 1}
   ]
   const doWeHaveBlackJack = isBlackJack(cards)
   expect(doWeHaveBlackJack).toBe(true)
 
   const moreCards: Card[] = [
-    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1},
-    {id: 'jack of hearts', name: 'jack of hearts', suit: 'hearts', value: 10}
+    {id: 'ace of ♥', name: 'ace', suit: '♥', value: 1},
+    {id: 'jack of ♥', name: 'jack', suit: '♥', value: 10}
   ]
   const doWeHaveBlackJackAgain = isBlackJack(moreCards)
   expect(doWeHaveBlackJackAgain).toBe(true)
@@ -64,8 +64,8 @@ it('checks if a set of cards is blackjack and returns true if so', () => {
 
 it('checks if a set of cards is blackjack and returns false if not', () => {
   const cards: Card[] = [
-    {id: '9 of hearts', name: '9 of hearts', suit: 'hearts', value: 9},
-    {id: 'ace of hearts', name: 'ace of hearts', suit: 'hearts', value: 1}
+    {id: '9 of ♥', name: '9', suit: '♥', value: 9},
+    {id: 'ace of ♥', name: 'ace', suit: '♥', value: 1}
   ]
   const doWeHaveBlackJack = isBlackJack(cards)
   expect(doWeHaveBlackJack).toBe(false)

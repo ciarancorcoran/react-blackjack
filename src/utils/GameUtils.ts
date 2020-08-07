@@ -33,10 +33,10 @@ export const createDeck = () => {
   const cards: Card[] = []
 
   for (let i = 2; i < 11; i++) {
-    cards.push({id: `${i.toString()} of hearts`, name: i.toString(), suit: '♥', value: i})
-    cards.push({id: `${i.toString()} of diamonds`, name: i.toString(), suit: '♦', value: i})
-    cards.push({id: `${i.toString()} of spades`, name: i.toString(), suit: '♠', value: i})
-    cards.push({id: `${i.toString()} of clubs`, name: i.toString(), suit: '♣', value: i})
+    cards.push({id: `${i.toString()} of ♥`, name: i.toString(), suit: '♥', value: i})
+    cards.push({id: `${i.toString()} of ♦`, name: i.toString(), suit: '♦', value: i})
+    cards.push({id: `${i.toString()} of ♠`, name: i.toString(), suit: '♠', value: i})
+    cards.push({id: `${i.toString()} of ♣`, name: i.toString(), suit: '♣', value: i})
   }
 
   for (let i = 0; i < suits.length; i++) {

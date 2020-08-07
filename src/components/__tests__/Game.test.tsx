@@ -83,9 +83,9 @@ describe('Game', () => {
 
   it('finds blackjack upon starting a game', () => {
     const blackjackTestDeck = [
-      {id: 'ace of clubs', name: 'ace', suit: 'clubs', value: 1},
-      {id: '10 of diamonds', name: '10', suit: 'diamonds', value: 10},
-      {id: 'ace of hearts', name: 'ace', suit: 'hearts', value: 1}]
+      {id: 'ace of ♣', name: 'ace', suit: '♣', value: 1},
+      {id: '10 of ♦', name: '10', suit: '♦', value: 10},
+      {id: 'ace of ♥', name: 'ace', suit: '♥', value: 1}]
     const { getByTestId } = render(<Game startingDeck={blackjackTestDeck} />)
     const startGameButton = getByTestId('start-button')
     fireEvent.click(startGameButton)
@@ -95,10 +95,10 @@ describe('Game', () => {
 
   it('finds a tie game after game ends', () => {
     const testDeck = [
-      {id: '10 of clubs', name: '10', suit: 'clubs', value: 10},
-      {id: '10 of diamonds', name: '10', suit: 'diamonds', value: 10},
-      {id: '10 of hearts', name: '10', suit: 'hearts', value: 10},
-      {id: '10 of spades', name: '10', suit: 'spades', value: 10}]
+      {id: '10 of ♣', name: '10', suit: '♣', value: 10},
+      {id: '10 of ♦', name: '10', suit: '♦', value: 10},
+      {id: '10 of ♥', name: '10', suit: '♥', value: 10},
+      {id: '10 of ♠', name: '10', suit: '♠', value: 10}]
     const { getByTestId } = render(<Game startingDeck={testDeck} />)
     const startGameButton = getByTestId('start-button')
     const stickGameButton = getByTestId('stick-button')
@@ -108,10 +108,10 @@ describe('Game', () => {
 
   it('sets a player as bust', () => {
     const testDeck = [
-      {id: '10 of clubs', name: '10', suit: 'clubs', value: 10},
-      {id: '5 of diamonds', name: '5', suit: 'diamonds', value: 5},
-      {id: '10 of hearts', name: '10', suit: 'hearts', value: 10},
-      {id: '10 of spades', name: '10', suit: 'spades', value: 10}]
+      {id: '10 of ♣', name: '10', suit: '♣', value: 10},
+      {id: '5 of ♦', name: '5', suit: '♦', value: 5},
+      {id: '10 of ♥', name: '10', suit: '♥', value: 10},
+      {id: '10 of ♠', name: '10', suit: '♠', value: 10}]
     const { getByTestId } = render(<Game startingDeck={testDeck} />)
     const startGameButton = getByTestId('start-button')
     const hitButton = getByTestId('hit-button')
