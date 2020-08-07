@@ -29,14 +29,14 @@ export const checkWinner = (finalScore: Score) => {
 }
 
 export const createDeck = () => {
-  // TODO: to be improved
-  const suits = ['hearts',  'diamonds', 'spades', 'clubs']
+  const suits = ['♥', '♦', '♠', '♣']
   const cards: Card[] = []
+
   for (let i = 2; i < 11; i++) {
-    cards.push({id: `${i.toString()} of hearts`, name: i.toString(), suit: 'hearts', value: i})
-    cards.push({id: `${i.toString()} of diamonds`, name: i.toString(), suit: 'diamonds', value: i})
-    cards.push({id: `${i.toString()} of spades`, name: i.toString(), suit: 'spades', value: i})
-    cards.push({id: `${i.toString()} of clubs`, name: i.toString(), suit: 'clubs', value: i})
+    cards.push({id: `${i.toString()} of hearts`, name: i.toString(), suit: '♥', value: i})
+    cards.push({id: `${i.toString()} of diamonds`, name: i.toString(), suit: '♦', value: i})
+    cards.push({id: `${i.toString()} of spades`, name: i.toString(), suit: '♠', value: i})
+    cards.push({id: `${i.toString()} of clubs`, name: i.toString(), suit: '♣', value: i})
   }
 
   for (let i = 0; i < suits.length; i++) {

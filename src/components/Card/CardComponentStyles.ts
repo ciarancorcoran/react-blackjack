@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+export const redColor = {color: '#FF0000'}
+
 export const CardList = styled.ul`
   list-style: none;
   padding: 10px;
