@@ -1,6 +1,5 @@
 export enum GameStatus {
-  started,
-  stopped,
-  playerTurn,
-  dealerTurn
+  STOPPED,
+  PLAYER_TURN,
+  DEALER_TURN
 }

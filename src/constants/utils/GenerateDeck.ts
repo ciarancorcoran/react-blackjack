@@ -1,13 +1,9 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import { Card } from '../types/Card'
 
-import { Card } from '../constants/types/Card'
-
-import Game from './Game'
-
-export const createAndShuffleDeck = () => {
+export const createDeck = () => {
   // TODO: to be improved
   const suits = ['hearts',  'diamonds', 'spades', 'clubs']
-  let cards: Card[] = []
+  const cards: Card[] = []
   for (let i = 2; i < 11; i++) {
     cards.push({id: `${i.toString()} of hearts`, name: `${i.toString()} of hearts`, suit: 'hearts', value: i})
     cards.push({id: `${i.toString()} of diamonds`, name: `${i.toString()} of diamonds`, suit: 'diamonds', value: i})
@@ -22,37 +18,5 @@ export const createAndShuffleDeck = () => {
     cards.push({id: `ace of ${suits[i]}`, name: `ace of ${suits[i]}`, suit: suits[i], value: 1})
   }
 
-  return (shuffleDeck([...cards]))
+  return [...cards]
 }
-
-const shuffleDeck = (deck: Card[]) => {
-  const currentDeck = [...deck]
-  let currentIndex = currentDeck.length, temporaryValue, randomIndex;
-
-  while (0 !== currentIndex) {
-
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    temporaryValue = currentDeck[currentIndex]
-    currentDeck[currentIndex] = currentDeck[randomIndex]
-    currentDeck[randomIndex] = temporaryValue
-  }
-
-  return currentDeck
-}
-
-const GameBoard: FunctionComponent = () => {
-  const [startingDeck, setStartingDeck] = useState<Card[]>([])
-
-  useEffect(() => {
-    const deck = createAndShuffleDeck()
-    setStartingDeck(deck)
-  }, [])
-
-  return (
-    <Game startingDeck={startingDeck} />
-  )
-}
-
-export default GameBoard

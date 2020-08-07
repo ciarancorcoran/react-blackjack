@@ -1,10 +1,13 @@
-import React from 'react';
-import './App.css';
-import GameBoard from './containers/GameBoard'
+import React from 'react'
+import './App.css'
+
+import { createDeck } from './constants/utils/GenerateDeck'
+
+import Game from './components/Game'
 
 function App() {
   return (
-    <GameBoard />
+    <Game startingDeck={createDeck()} />
   )
 }
 
