@@ -17,9 +17,9 @@ const ScoreComponent: FunctionComponent<ScoreComponentProps> = ({
   resultMessage
 }) => (
   <>
-    <h3>Player Score: {score.playerScore} {playerCardsContainAce && isPlayersTurn ? `or ${(score.playerScore + 10)}` : ''}</h3>
+    <h3 data-testid='player-score'>Player Score: {score.playerScore} {playerCardsContainAce && isPlayersTurn ? `or ${(score.playerScore + 10)}` : ''}</h3>
     <h3>Dealer Score: {score.dealerScore} {dealerCardsContainAce && isPlayersTurn ? `or ${(score.dealerScore + 10)}` : ''}</h3>
-    {!resultMessage ? undefined : <p>{resultMessage}</p>}
+    {!resultMessage ? undefined : <h2>{resultMessage}</h2>}
   </>
 )
 

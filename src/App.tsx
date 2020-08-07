@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 
-import { createDeck } from './constants/utils/GenerateDeck'
+import { createDeck } from './utils/GameUtils'
 
 import Game from './components/Game'
 

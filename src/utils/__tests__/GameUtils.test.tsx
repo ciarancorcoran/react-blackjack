@@ -7,7 +7,8 @@ import {
   isHighAce,
   isBlackJack,
   checkForTie,
-  checkWinner
+  checkWinner,
+  createDeck
 } from '../GameUtils'
 
 it('calculates a score from a given card and score', () => {
@@ -113,4 +114,9 @@ it('checks for winner and returns tie game message if it is a tie', () => {
   }
   const dealerWonMessage = checkWinner(score)
   expect(dealerWonMessage).toBe(`It's a tie!`)
+})
+
+it('creates a deck of 52 cards', () => {
+  const deck = createDeck()
+  expect(deck.length).toBe(52)
 })

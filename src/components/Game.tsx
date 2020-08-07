@@ -13,7 +13,9 @@ import {
   pickRandomCardAndRemove,
   checkWinner,
   checkForTie
-} from './GameUtils'
+} from '../utils/GameUtils'
+
+import { GameContainer } from './GameStyles'
 
 import CardComponent from './Card/CardComponent'
 import ScoreComponent from './Score/ScoreComponent'
@@ -67,9 +69,9 @@ const Game: FunctionComponent<GameProps> = ({ startingDeck }) => {
       setResultMessage(WinStatus.PLAYER_BUST)
       setGameState(GameStatus.STOPPED)
       return
+    } else {
+      setDeck(playerCardAndFilteredDeck.filteredDeck)
     }
-
-    setDeck([...playerCardAndFilteredDeck.filteredDeck])
   }
 
   const handleStickClick = () => {
@@ -111,14 +113,14 @@ const Game: FunctionComponent<GameProps> = ({ startingDeck }) => {
   }
 
   return (
-    <>
+    <GameContainer>
       <CardComponent cards={playerCards} cardType={'Player Cards'} />
       <CardComponent cards={dealerCards} cardType={'Dealer Cards'} />
       <ScoreComponent
         score={score}
         playerCardsContainAce={cardsContainAce(playerCards)}
         dealerCardsContainAce={cardsContainAce(dealerCards)}
-        isPlayersTurn={gameState === 2 ? true : false}
+        isPlayersTurn={gameState === 1 ? true : false}
         resultMessage={resultMessage} />
       <GameControls
         isGameStopped={gameState === 0 ? true : false}
@@ -126,7 +128,7 @@ const Game: FunctionComponent<GameProps> = ({ startingDeck }) => {
         handleHitClick={handleHitClick}
         handleStickClick={handleStickClick}
       />
-    </>
+    </GameContainer>
   )
 }
 
